@@ -1,0 +1,6 @@
+{
+  "name": "Kapse Fitness — Train • Transform • Perform",
+  "description": "Complete free personal fitness trainer, Indian nutrition database, AI camera food scanner, goal calculators, home & gym workout tracker, and daily habit reminders.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
