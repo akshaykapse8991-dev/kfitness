@@ -12,7 +12,10 @@ import {
   Flame,
   Scale,
 } from 'lucide-react';
-import { WeightRecord } from '../../types/fitness';
+export interface WeightRecord {
+  date: string;
+  weightKg: number;
+}
 
 interface WeightProjectionsCardProps {
   weightHistory: WeightRecord[];
@@ -102,33 +105,33 @@ export const WeightProjectionsCard: React.FC<WeightProjectionsCardProps> = ({
   }, [weightHistory, currentWeightKg, targetWeightKg]);
 
   return (
-    <div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 rounded-3xl border border-indigo-500/20 p-5 shadow-xl space-y-4">
+    <div className="metric-pane p-5 space-y-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+          <div className="w-8 h-8 rounded bg-black border border-white/10 flex items-center justify-center text-[#00DC82]">
             <Target className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-white flex items-center gap-2">
-              Goal Weight Projection
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 uppercase">
-                Forecast
+            <h3 className="text-sm font-syne font-extrabold text-white flex items-center gap-2">
+              GOAL WEIGHT PROJECTION
+              <span className="tag-accent text-[9px]">
+                FORECAST
               </span>
             </h3>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] font-mono text-white/50">
               Trajectory calculated from weigh-in velocity and remaining delta.
             </p>
           </div>
         </div>
 
         <span
-          className={`self-start sm:self-auto text-xs font-black px-3 py-1 rounded-full border ${
+          className={`self-start sm:self-auto text-xs font-mono font-bold px-3 py-1 rounded border ${
             projection.status === 'achieved'
-              ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+              ? 'bg-[#00DC82]/10 border-[#00DC82]/40 text-[#00DC82]'
               : projection.status === 'on_track'
-              ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300'
-              : 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+              ? 'bg-[#38BDF8]/10 border-[#38BDF8]/40 text-[#38BDF8]'
+              : 'bg-amber-500/10 border-amber-500/40 text-amber-300'
           }`}
         >
           {projection.paceStatus}
@@ -138,64 +141,64 @@ export const WeightProjectionsCard: React.FC<WeightProjectionsCardProps> = ({
       {/* Main Metric Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {/* Estimated Date */}
-        <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
-            <Calendar className="w-3.5 h-3.5 text-indigo-400" />
-            Projected Target Date
+        <div className="bg-black/50 p-3.5 rounded border border-white/5 space-y-1">
+          <span className="label-mono flex items-center gap-1">
+            <Calendar className="w-3.5 h-3.5 text-[#38BDF8]" />
+            PROJECTED DATE
           </span>
-          <div className="text-base sm:text-lg font-black text-white">
+          <div className="text-base sm:text-lg font-syne font-extrabold text-white">
             {projection.projectedDateStr}
           </div>
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] font-mono text-white/40">
             {projection.status === 'achieved' ? 'Goal Reached' : `in ~${projection.daysRemaining} days`}
           </span>
         </div>
 
         {/* Time Remaining */}
-        <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
-            Estimated Duration
+        <div className="bg-black/50 p-3.5 rounded border border-white/5 space-y-1">
+          <span className="label-mono flex items-center gap-1">
+            <Clock className="w-3.5 h-3.5 text-[#38BDF8]" />
+            DURATION
           </span>
-          <div className="text-base sm:text-lg font-black text-cyan-300">
+          <div className="text-base sm:text-lg font-syne font-extrabold text-[#38BDF8]">
             {projection.status === 'achieved' ? '0 Weeks' : `${projection.weeksRemaining} Wks`}
           </div>
-          <span className="text-[10px] text-slate-400">
-            {projection.status === 'achieved' ? 'Maintenance' : 'To final goal'}
+          <span className="text-[10px] font-mono text-white/40">
+            {projection.status === 'achieved' ? 'Maintenance' : 'To target weight'}
           </span>
         </div>
 
         {/* Current Weekly Velocity */}
-        <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
-            <TrendingDown className="w-3.5 h-3.5 text-emerald-400" />
-            Current Velocity
+        <div className="bg-black/50 p-3.5 rounded border border-white/5 space-y-1">
+          <span className="label-mono flex items-center gap-1">
+            <TrendingDown className="w-3.5 h-3.5 text-[#00DC82]" />
+            VELOCITY
           </span>
-          <div className="text-base sm:text-lg font-black text-emerald-400">
+          <div className="text-base sm:text-lg font-syne font-extrabold text-[#00DC82]">
             {projection.weeklyVelocityKg > 0 ? `+${projection.weeklyVelocityKg}` : projection.weeklyVelocityKg}{' '}
-            <span className="text-xs font-normal text-slate-400">kg/wk</span>
+            <span className="text-xs font-mono font-normal text-white/40">kg/wk</span>
           </div>
-          <span className="text-[10px] text-slate-400">7-day rolling trend</span>
+          <span className="text-[10px] font-mono text-white/40">7-day rolling trend</span>
         </div>
 
         {/* Remaining Weight */}
-        <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
+        <div className="bg-black/50 p-3.5 rounded border border-white/5 space-y-1">
+          <span className="label-mono flex items-center gap-1">
             <Scale className="w-3.5 h-3.5 text-amber-400" />
-            Remaining Gap
+            REMAINING GAP
           </span>
-          <div className="text-base sm:text-lg font-black text-amber-400">
-            {projection.totalRemainingKg} <span className="text-xs font-normal text-slate-400">kg</span>
+          <div className="text-base sm:text-lg font-syne font-extrabold text-amber-400">
+            {projection.totalRemainingKg} <span className="text-xs font-mono font-normal text-white/40">kg</span>
           </div>
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] font-mono text-white/40">
             {currentWeightKg}kg → {targetWeightKg}kg
           </span>
         </div>
       </div>
 
       {/* Advisory / Coaching Note */}
-      <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 flex items-center gap-2.5 text-xs text-slate-300">
-        <Sparkles className="w-4 h-4 text-indigo-400 shrink-0" />
+      <div className="p-3.5 rounded bg-black/40 border border-white/5 flex items-center gap-2.5 text-xs font-mono text-white/70">
+        <Sparkles className="w-4 h-4 text-[#00DC82] shrink-0" />
         <p className="leading-relaxed">
           {projection.message}
         </p>

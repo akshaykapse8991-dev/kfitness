@@ -150,6 +150,7 @@ export const AINutritionCoach: React.FC<AINutritionCoachProps> = ({
       protein: 15,
       carbs: 18,
       fat: 5,
+      fiber: 4,
       isVeg: true,
     };
     onAddMealItem(item);

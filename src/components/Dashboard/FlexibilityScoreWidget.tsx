@@ -86,24 +86,24 @@ export const FlexibilityScoreWidget: React.FC<FlexibilityScoreWidgetProps> = ({
   };
 
   return (
-    <div className="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 shadow-xl relative overflow-hidden">
+    <div className="metric-pane p-5 relative overflow-hidden">
       {/* Background ambient glow */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-48 h-48 bg-[#00DC82]/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+      <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded bg-black border border-white/10 flex items-center justify-center text-[#38BDF8]">
             <Activity className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">Flexibility & Mobility Score</h3>
-            <p className="text-[11px] text-slate-400">Stretching consistency & joint range-of-motion</p>
+            <h3 className="text-sm font-syne font-extrabold text-white">FLEXIBILITY & MOBILITY SCORE</h3>
+            <p className="text-[11px] font-mono text-white/50">Stretching consistency & joint range-of-motion</p>
           </div>
         </div>
 
-        <span className={`text-xs font-black px-2.5 py-1 rounded-lg uppercase tracking-wider border border-current/20 ${tier.badgeBg}`}>
-          {tier.label}
+        <span className="tag-cyan">
+          {tier.label.toUpperCase()}
         </span>
       </div>
 

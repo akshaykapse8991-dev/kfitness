@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header, ActiveTab } from './components/Header';
+import { SidebarNav } from './components/Navigation/SidebarNav';
 import { DashboardView } from './components/Dashboard/DashboardView';
 import { CalculatorsView } from './components/Calculators/CalculatorsView';
 import { ExercisesView } from './components/Exercises/ExercisesView';
@@ -321,13 +322,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950 font-sans">
-      <Header
+    <div className="min-h-screen bg-[#09090B] text-white flex flex-row font-geist antialiased selection:bg-[#00DC82] selection:text-black">
+      {/* Desktop Sidebar Navigation (Variation 3 specification) */}
+      <SidebarNav
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        userProfile={userProfile}
-        waterGlasses={dailyTracker.waterGlasses}
-        consumedCalories={dailyTracker.consumedCalories}
         privacyShieldConfig={privacyShieldConfig}
         onOpenPrivacySettings={() => setIsPrivacySettingsOpen(true)}
         onLockNow={() => setIsAppLocked(true)}
@@ -335,73 +334,117 @@ export default function App() {
         onOpenWhatsNew={() => setIsWhatsNewOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8">
-        {activeTab === 'dashboard' && (
-          <DashboardView
-            userProfile={userProfile}
-            dailyTracker={dailyTracker}
-            onUpdateDailyTracker={handleUpdateDailyTracker}
-            onNavigateTab={setActiveTab}
-            weightHistory={weightHistory}
-            onAddWeightLog={handleAddWeightLog}
-          />
-        )}
+      {/* Main Shell */}
+      <div className="flex-1 min-w-0 flex flex-col relative bg-[#09090B]">
+        {/* Subtle dot grid & top right radial glow */}
+        <div className="dot-grid absolute inset-0 pointer-events-none opacity-40 z-0" />
+        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[radial-gradient(circle_at_top_right,rgba(0,220,130,0.06),transparent_70%)] pointer-events-none z-0" />
 
-        {activeTab === 'calendar' && (
-          <AdaptiveCalendarView onNavigateTab={setActiveTab} />
-        )}
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          userProfile={userProfile}
+          waterGlasses={dailyTracker.waterGlasses}
+          consumedCalories={dailyTracker.consumedCalories}
+          privacyShieldConfig={privacyShieldConfig}
+          onOpenPrivacySettings={() => setIsPrivacySettingsOpen(true)}
+          onLockNow={() => setIsAppLocked(true)}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenWhatsNew={() => setIsWhatsNewOpen(true)}
+        />
 
-        {activeTab === 'nutrition' && (
-          <NutritionView
-            onAddMealItem={handleAddMealItem}
-            userProfile={userProfile}
-            todayMeals={dailyTracker.mealsLogged}
-          />
-        )}
+        <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8">
+          {activeTab === 'dashboard' && (
+            <DashboardView
+              userProfile={userProfile}
+              dailyTracker={dailyTracker}
+              onUpdateDailyTracker={handleUpdateDailyTracker}
+              onNavigateTab={setActiveTab}
+              weightHistory={weightHistory}
+              onAddWeightLog={handleAddWeightLog}
+            />
+          )}
 
-        {activeTab === 'exercises' && (
-          <ExercisesView
-            onLogExerciseSession={handleLogExerciseSession}
-            exerciseHistory={dailyTracker.completedExercises}
-          />
-        )}
+          {activeTab === 'calendar' && (
+            <AdaptiveCalendarView onNavigateTab={setActiveTab} />
+          )}
 
-        {activeTab === 'ai_studio' && (
-          <AIStudioView userProfile={userProfile} />
-        )}
+          {activeTab === 'nutrition' && (
+            <NutritionView
+              onAddMealItem={handleAddMealItem}
+              userProfile={userProfile}
+              todayMeals={dailyTracker.mealsLogged}
+            />
+          )}
 
-        {activeTab === 'calculators' && (
-          <CalculatorsView
-            userProfile={userProfile}
-            onUpdateProfile={handleUpdateProfile}
-          />
-        )}
+          {activeTab === 'exercises' && (
+            <ExercisesView
+              onLogExerciseSession={handleLogExerciseSession}
+              exerciseHistory={dailyTracker.completedExercises}
+            />
+          )}
 
-        {activeTab === 'diet_plan' && (
-          <DietPlannerView
-            userProfile={userProfile}
-            onAddMealToDiary={handleAddMealItem}
-          />
-        )}
+          {activeTab === 'ai_studio' && (
+            <AIStudioView userProfile={userProfile} />
+          )}
 
-        {activeTab === 'scanner' && (
-          <FoodScannerView
-            userProfile={userProfile}
-            onAddMealItem={handleAddMealItem}
-          />
-        )}
+          {activeTab === 'calculators' && (
+            <CalculatorsView
+              userProfile={userProfile}
+              onUpdateProfile={handleUpdateProfile}
+            />
+          )}
 
-        {activeTab === 'reminders' && (
-          <RemindersView
-            userProfile={userProfile}
-            dailyTracker={dailyTracker}
-            onUpdateDailyTracker={handleUpdateDailyTracker}
-            onExportData={handleExportData}
-            onImportData={handleImportData}
-            onResetData={handleResetData}
-          />
-        )}
-      </main>
+          {activeTab === 'diet_plan' && (
+            <DietPlannerView
+              userProfile={userProfile}
+              onAddMealToDiary={handleAddMealItem}
+            />
+          )}
+
+          {activeTab === 'scanner' && (
+            <FoodScannerView
+              userProfile={userProfile}
+              onAddMealItem={handleAddMealItem}
+            />
+          )}
+
+          {activeTab === 'reminders' && (
+            <RemindersView
+              userProfile={userProfile}
+              dailyTracker={dailyTracker}
+              onUpdateDailyTracker={handleUpdateDailyTracker}
+              onExportData={handleExportData}
+              onImportData={handleImportData}
+              onResetData={handleResetData}
+            />
+          )}
+        </main>
+
+        {/* Technical Footer Bar matching Variation 3 */}
+        <footer className="footer-bar relative z-10 border-t border-white/10 bg-[#141417] px-6 py-3.5 hidden md:flex items-center justify-between text-[11px] font-mono text-white/50">
+          <div className="flex items-center gap-2">
+            <span className="text-white/80 font-bold">KAPSE FITNESS OS</span>
+            <span>//</span>
+            <span>100% PRIVATE CLIENT CACHE</span>
+            <span>//</span>
+            <span>ZERO CLOUD LEAK</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span>BUILD v2.5.4</span>
+            <span>•</span>
+            <a
+              href="/api/download-apk"
+              download="KapseFitness-v2.5.apk"
+              className="text-[#00DC82] hover:underline font-bold"
+            >
+              DOWNLOAD APK
+            </a>
+            <span>•</span>
+            <span className="text-[#00DC82]">BIOMETRIC READY</span>
+          </div>
+        </footer>
+      </div>
 
       {/* Floating Speed Dial Quick Action Button */}
       <FloatingQuickAccess
@@ -455,28 +498,6 @@ export default function App() {
           onTriggerLockNow={() => setIsAppLocked(true)}
         />
       )}
-
-      {/* Footer */}
-      <footer className="mt-auto border-t border-slate-900 bg-slate-950/80 py-6 text-center text-xs text-slate-400 hidden md:block">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-semibold text-slate-300">
-            Kapse Fitness — Train • Transform • Perform (v2.5 Updated Edition)
-          </p>
-          <div className="flex items-center gap-3 text-slate-400">
-            <span>Free personal use</span>
-            <span>•</span>
-            <a
-              href="/api/download-apk"
-              download="KapseFitness-v2.5.apk"
-              className="text-emerald-400 hover:underline font-bold"
-            >
-              Download Android APK
-            </a>
-            <span>•</span>
-            <span>100% private offline storage</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
